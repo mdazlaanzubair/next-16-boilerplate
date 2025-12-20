@@ -32,6 +32,10 @@ const data = {
       isActive: true,
       items: [
         {
+          title: "Post",
+          url: "/post",
+        },
+        {
           title: "History",
           url: "#",
         },

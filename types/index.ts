@@ -1,5 +1,5 @@
 // Post type
-export interface Post {
+export interface PostInterface {
   id: number;
   title: string;
   body: string;
@@ -13,7 +13,7 @@ export interface Post {
 }
 
 // User type
-export interface User {
+export interface UserInterface {
   id: number;
   username: string;
   email: string;
@@ -24,13 +24,13 @@ export interface User {
 }
 
 // Login Request type
-export interface LoginRequest {
+export interface LoginRequestInterface {
   username: string;
   password: string;
 }
 
 // Login Response type
-export interface LoginResponse extends User {
+export interface LoginResponseInterface extends UserInterface {
   accessToken: string;
   refreshToken: string;
 }

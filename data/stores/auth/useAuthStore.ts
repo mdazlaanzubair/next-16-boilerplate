@@ -1,19 +1,19 @@
 import { create } from "zustand";
 import { withPersist } from "../middleware";
 import { tokenService } from "@/data/axios/tokenService";
-import { User } from "@/types";
+import { UserInterface } from "@/types";
 
-interface AuthState {
-  user: User | null;
+interface AuthStateInterface {
+  user: UserInterface | null;
   isAuthenticated: boolean;
   isHydrated: boolean;
 
-  setUser: (user: User | null) => void;
+  setUser: (user: UserInterface | null) => void;
   logout: () => void;
   markHydrated: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<AuthStateInterface>()(
   withPersist(
     (set) => ({
       user: null,
@@ -41,7 +41,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-store",
-      partialize: (state): Partial<AuthState> => ({
+      partialize: (state): Partial<AuthStateInterface> => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),

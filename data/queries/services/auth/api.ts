@@ -1,11 +1,14 @@
 import axiosClient from "@/data/axios/client.config";
-import type { LoginRequest, LoginResponse } from "@/types";
+import type { LoginRequestInterface, LoginResponseInterface } from "@/types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://dummyjson.com";
 
 export const authApi = {
-  login(payload: LoginRequest) {
-    return axiosClient.post<LoginResponse>(`${BASE_URL}/auth/login`, payload);
+  login(payload: LoginRequestInterface) {
+    return axiosClient.post<LoginResponseInterface>(
+      `${BASE_URL}/auth/login`,
+      payload
+    );
   },
 
   getUser() {
