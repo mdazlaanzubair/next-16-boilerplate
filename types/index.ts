@@ -1,0 +1,36 @@
+// Post type
+export interface Post {
+  id: number;
+  title: string;
+  body: string;
+  tags: string[];
+  reactions: {
+    likes: number;
+    dislikes: number;
+  };
+  views: number;
+  userId: number;
+}
+
+// User type
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+}
+
+// Login Request type
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+// Login Response type
+export interface LoginResponse extends User {
+  accessToken: string;
+  refreshToken: string;
+}

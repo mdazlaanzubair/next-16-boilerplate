@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { GalleryVerticalEnd } from "lucide-react";
+import QueryProvider from "@/data/queries/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -37,28 +38,30 @@ export default function AuthLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="grid min-h-svh lg:grid-cols-3">
-            <div className="bg-primary relative hidden lg:block lg:col-span-2">
-              <img
-                src="/placeholder.svg"
-                alt="Image"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-              />
-            </div>
-            <div className="flex flex-col gap-4 p-6 md:p-10">
-              <div className="flex justify-center gap-2 md:justify-start">
-                <a href="#" className="flex items-center gap-2 font-medium">
-                  <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-                    <GalleryVerticalEnd className="size-4" />
-                  </div>
-                  Acme Inc.
-                </a>
+          <QueryProvider>
+            <div className="grid min-h-svh lg:grid-cols-3">
+              <div className="bg-primary relative hidden lg:block lg:col-span-2">
+                <img
+                  src="/placeholder.svg"
+                  alt="Image"
+                  className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+                />
               </div>
-              <div className="flex flex-1 items-center justify-center">
-                <div className="w-full max-w-xs">{children}</div>
+              <div className="flex flex-col gap-4 p-6 md:p-20">
+                <div className="flex justify-center gap-2 md:justify-start">
+                  <a href="#" className="flex items-center gap-2 font-medium">
+                    <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+                      <GalleryVerticalEnd className="size-4" />
+                    </div>
+                    Acme Inc.
+                  </a>
+                </div>
+                <div className="flex flex-1 items-center justify-center">
+                  <div className="w-full max-w-">{children}</div>
+                </div>
               </div>
             </div>
-          </div>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
