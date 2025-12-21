@@ -4,66 +4,50 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
 
-export function RegisterForm() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState<boolean>(false);
+export function ResetPasswordForm() {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
+    // UI-only simulation
+    console.log("Password reset submitted");
     setTimeout(() => {
-      console.log("Registering user:", { name, email, password });
       setIsLoading(false);
+      setIsSuccess(true);
     }, 1000);
   };
+
+  if (isSuccess) {
+    return (
+      <div className="flex flex-col space-y-4 text-center items-center">
+        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+          <CheckCircle2 className="h-10 w-10 text-green-600 dark:text-green-500" />
+        </div>
+        <div className="text-xl font-semibold">Password Reset Complete</div>
+        <div className="text-sm text-muted-foreground">
+          Your password has been successfully reset. You can now log in with
+          your new password.
+        </div>
+        <Button asChild className="w-full mt-4">
+          <Link href="/login">Back to Login</Link>
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="name">Full Name</Label>
-        <Input
-          id="name"
-          placeholder="John Doe"
-          type="text"
-          autoCapitalize="words"
-          autoComplete="name"
-          autoCorrect="off"
-          disabled={isLoading}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="h-11"
-          required
-        />
-      </div>
-
-      <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          placeholder="name@example.com"
-          type="email"
-          autoCapitalize="none"
-          autoComplete="email"
-          autoCorrect="off"
-          disabled={isLoading}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="h-11"
-          required
-        />
-      </div>
-
-      <div className="grid gap-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">New Password</Label>
         <div className="relative">
           <Input
             id="password"
@@ -90,7 +74,7 @@ export function RegisterForm() {
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Label htmlFor="confirm-password">Confirm New Password</Label>
         <div className="relative">
           <Input
             id="confirm-password"
@@ -100,7 +84,7 @@ export function RegisterForm() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="h-11 pr-10"
             required
-            pattern={password} // Simple HTML5 validation for match
+            pattern={password}
             title="Passwords must match"
           />
           <button
@@ -119,7 +103,7 @@ export function RegisterForm() {
 
       <Button disabled={isLoading} className="h-11 mt-2">
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Create Account
+        Reset Password
       </Button>
     </form>
   );
