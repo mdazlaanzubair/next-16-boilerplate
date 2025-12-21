@@ -1,18 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLogin } from "@/data/queries/services/auth/call-hooks";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -30,86 +25,75 @@ export function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const payload = {
-      username: email,
-      password,
-    };
-
-    mutate(payload);
+    mutate({ username: email, password });
   };
 
   useEffect(() => {
-    isSuccess && router.push("/dashboard");
+    isSuccess && router.push("/dashboard"); // Or /account depending on flow
   }, [isSuccess, router]);
 
   return (
-    <form className={cn("flex flex-col gap-6")} onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="grid gap-4">
       {isError && (
-        <div className="p-4 bg-red-300 text-red-500 font-semibold rounded-lg text-center">
-          {error.message}
+        <div className="p-3 text-sm bg-destructive/10 text-destructive rounded-md text-center font-medium">
+          {error?.message || "Something went wrong. Please try again."}
         </div>
       )}
-      <FieldGroup>
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Login to your account</h1>
-          <p className="text-muted-foreground text-sm text-balance">
-            Enter your email below to login to your account
-          </p>
+
+      <div className="grid gap-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          placeholder="name@example.com"
+          type="text"
+          autoCapitalize="none"
+          autoComplete="email"
+          autoCorrect="off"
+          disabled={isLoading}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="h-11"
+          required
+        />
+      </div>
+      <div className="grid gap-2">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">Password</Label>
+          <Link
+            href="#"
+            className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-muted-foreground"
+          >
+            Forgot your password?
+          </Link>
         </div>
-        <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input
-            id="email"
-            type="text"
-            placeholder="m@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </Field>
-        <Field>
-          <div className="flex items-center justify-between mb-0">
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <Button
-              type="button"
-              variant="link"
-              size="sm"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? "hide" : "show"}
-            </Button>
-          </div>
+        <div className="relative">
           <Input
             id="password"
             type={showPassword ? "text" : "password"}
-            placeholder="••••••••"
+            disabled={isLoading}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="h-11 pr-10"
             required
           />
-        </Field>
-        <Field>
-          <FieldDescription className="text-center">
-            <Link href="/register" className="underline underline-offset-4">
-              Forgot your password?
-            </Link>
-          </FieldDescription>
-        </Field>
-        <Field>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Login"}
-          </Button>
-        </Field>
-        <Field>
-          <FieldDescription className="text-center">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="underline underline-offset-4">
-              Sign up
-            </Link>
-          </FieldDescription>
-        </Field>
-      </FieldGroup>
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-muted-foreground"
+          >
+            {showPassword ? (
+              <EyeOff className="w-4 h-4" />
+            ) : (
+              <Eye className="w-4 h-4" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      <Button disabled={isLoading} className="h-11 mt-2">
+        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        Sign In with Email
+      </Button>
     </form>
   );
 }
