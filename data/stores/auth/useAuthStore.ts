@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { withPersist } from "../middleware";
 import { tokenService } from "@/data/axios/tokenService";
-import { UserInterface } from "@/types";
+import { UserShortInterface } from "@/types";
 
 interface AuthStateInterface {
-  user: UserInterface | null;
+  user: UserShortInterface | null;
   isAuthenticated: boolean;
   isHydrated: boolean;
 
-  setUser: (user: UserInterface | null) => void;
+  setUser: (user: UserShortInterface | null) => void;
   logout: () => void;
   markHydrated: () => void;
 }

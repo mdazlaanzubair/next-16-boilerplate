@@ -1,6 +1,4 @@
-import PostForm from "./components/PostForm";
-import PostList from "./components/PostList";
-import ViewPost from "./components/ViewPost";
+import { PostList, PostForm, ViewPost } from "./components";
 
 const PostPage = () => {
   return (

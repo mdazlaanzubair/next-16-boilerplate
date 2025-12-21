@@ -11,10 +11,6 @@ export const authApi = {
     );
   },
 
-  getUser() {
-    return axiosClient.get<any>(`${BASE_URL}/auth/me`);
-  },
-
   getRefreshToken(refreshToken: string) {
     return axiosClient.post<any>(`${BASE_URL}/auth/refresh`, {
       refreshToken,

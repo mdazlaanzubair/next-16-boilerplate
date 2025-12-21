@@ -13,7 +13,7 @@ export interface PostInterface {
 }
 
 // User type
-export interface UserInterface {
+export interface UserShortInterface {
   id: number;
   username: string;
   email: string;
@@ -23,6 +23,70 @@ export interface UserInterface {
   image: string;
 }
 
+// User Full type
+export interface UserFullInterface extends UserShortInterface {
+  maidenName: string;
+  age: number;
+  phone: string;
+  birthDate: string;
+  bloodGroup: string;
+  height: number;
+  weight: number;
+  eyeColor: string;
+  hair: {
+    color: string;
+    type: string;
+  };
+  ip: string;
+  address: {
+    address: string;
+    city: string;
+    state: string;
+    stateCode: string;
+    postalCode: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
+    country: string;
+  };
+  macAddress: string;
+  university: string;
+  bank: {
+    cardExpire: string;
+    cardNumber: string;
+    cardType: string;
+    currency: string;
+    iban: string;
+  };
+  company: {
+    department: string;
+    name: string;
+    title: string;
+    address: {
+      address: string;
+      city: string;
+      state: string;
+      stateCode: string;
+      postalCode: string;
+      coordinates: {
+        lat: number;
+        lng: number;
+      };
+      country: string;
+    };
+  };
+  ein: string;
+  ssn: string;
+  userAgent: string;
+  crypto: {
+    coin: string;
+    wallet: string;
+    network: string;
+  };
+  role: string;
+}
+
 // Login Request type
 export interface LoginRequestInterface {
   username: string;
@@ -30,7 +94,7 @@ export interface LoginRequestInterface {
 }
 
 // Login Response type
-export interface LoginResponseInterface extends UserInterface {
+export interface LoginResponseInterface extends UserShortInterface {
   accessToken: string;
   refreshToken: string;
 }
